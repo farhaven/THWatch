@@ -1,7 +1,6 @@
 import re
 import time
 import logging
-import sys
 
 import pushover
 import thwbus
@@ -50,7 +49,7 @@ if __name__ == "__main__":
 
             log.debug("Got new offer %s", o)
             known_offers.add(o)
-            # handle_new_offer(o)
+            handle_new_offer(o)
 
         log.debug("waiting 10 seconds before polling again.")
         time.sleep(10)
