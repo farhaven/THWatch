@@ -1,6 +1,8 @@
 """ This module deals with pushover notifications """
 import logging
 
+from enum import Enum, unique
+
 import requests
 
 PUSHOVER_API_TOKEN = "HereBeDragons"
@@ -11,7 +13,8 @@ log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 
-class Priority:
+@unique
+class Priority(Enum):
     """ Names for Pushover message priorites """
     Lowest = -2  # No audible alert
     Low = -1
@@ -26,7 +29,7 @@ def _push(target, text, title, img=None, priority=Priority.Low):
         "user": target,
         "title": title,
         "message": text,
-        "priority": priority
+        "priority": priority.value
     }
 
     if img is None:
