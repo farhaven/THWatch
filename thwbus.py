@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 baseurl = "https://www.thw-bundesschule.de/THW-BuS/DE/Ausbildungsangebot/Lehrgangskalender/lehrgangskalender_node.html?sort=lastMinute"
 basehost = '/'.join(baseurl.split('/', 3)[:3])
 
-RE_LAST_MINUTE = re.compile(r'^Noch [0-9]+ Last\-Minute\-Plätze verfügbar$')
+RE_LAST_MINUTE = re.compile(r'^Noch ([0-9]+) Last\-Minute\-Plätze verfügbar$')
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
@@ -20,15 +20,16 @@ log.setLevel(logging.DEBUG)
 class LastMinuteOffer:
     """ Represents a last minute offer in a course """
 
-    def __init__(self, *, title, meta, reservation, dates):
+    def __init__(self, *, title, meta, reservation, dates, remaining_places):
         self.title = title
         self.meta = meta
         self.begin = min(dates)
         self.end = max(dates)
         self.reservation = "/".join((basehost, reservation))
+        self.remaining_places = remaining_places
 
     def __str__(self):
-        return f"{self.title} -- {self.meta} -- {self.begin} :: {self.end} -- {self.reservation}"
+        return f"<b>{self.title}</b>\n{self.meta}\nVon: {self.begin}\nBis: {self.end}\nFreie Plätze: {self.remaining_places}\n<a href=\"{self.reservation}\">Reservieren</a>"
 
 
 def parse_single_result_page(text):
@@ -56,15 +57,23 @@ def parse_single_result_page(text):
         action = course.find(class_="courseAction")
         if action.a is None:
             # No "reserve last minute place" link
-            return False
-        if not RE_LAST_MINUTE.match(action.a.text):
+            return None
+        m = RE_LAST_MINUTE.match(action.a.text)
+        if m is None:
             log.debug("Action text '%s' does not match RE", action.a.text)
-            return False
-        return True
+            return None
+        return m.group(1)
 
     for course in teasers:
-        if not is_last_minute(course):
+        m = is_last_minute(course)
+        if m is None:
             continue
+        try:
+            remaining_places = int(m)
+        except ValueError:
+            remaining_places = 0
+            log.exception("Can't parse number of remaining places")
+
         action = course.find(class_="courseAction")
         dates = course.find('dl', class_='docData')
         dates = [d.text for d in dates.find_all('dd')]
@@ -73,6 +82,7 @@ def parse_single_result_page(text):
         o = LastMinuteOffer(title=course.h2.text,
                             meta=course.find('span', class_='metadata').text,
                             dates=dates,
+                            remaining_places=int(remaining_places),
                             reservation=action.a.attrs['href'])
         offers.append(o)
 
