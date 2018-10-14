@@ -52,5 +52,5 @@ if __name__ == "__main__":
             known_offers.add(o)
             handle_new_offer(o)
 
-        log.debug("waiting 10 seconds before polling again.")
+        log.debug("waiting 60 seconds before polling again.")
         time.sleep(60)
