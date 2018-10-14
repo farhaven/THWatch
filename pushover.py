@@ -23,13 +23,14 @@ class Priority(Enum):
     Emergency = 2
 
 
-def _push(target, text, title, img=None, priority=Priority.Low):
+def _push(target, text, title, do_html=True, img=None, priority=Priority.Low):
     reqdata = {
         "token": PUSHOVER_API_TOKEN,
         "user": target,
         "title": title,
         "message": text,
-        "priority": priority.value
+        "priority": priority.value,
+        "html": 1 if do_html else 0,
     }
 
     if img is None:
