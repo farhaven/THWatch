@@ -19,7 +19,8 @@ ROUTING = {
 def push_offer(target, offer):
     res = pushover.push(target=target,
                         text=str(offer),
-                        title="Neuer Last-Minute-Platz verfügbar")
+                        title="Neuer Last-Minute-Platz verfügbar",
+                        priority=pushover.Priority.Normal)
     if res.status_code != 200:
         log.error("Failed to push message to %s: %s", target, res.text)
 
