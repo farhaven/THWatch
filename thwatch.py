@@ -39,7 +39,7 @@ if __name__ == "__main__":
     log.debug("got %s known offers: %s", len(known_offers), known_offers)
 
     while True:
-        print(sorted([hash(o) for o in known_offers]), len(known_offers))
+        log.debug("Known offers: %s (%s)", sorted([hash(o) for o in known_offers]), len(known_offers))
 
         offers = thwbus.get_last_minute_offers()
         log.debug("Got %s offers", len(offers))
