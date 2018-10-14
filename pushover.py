@@ -20,7 +20,7 @@ class Priority:
     Emergency = 2
 
 
-def _push(target, text, title, img=None, priority=Priority.Lowest):
+def _push(target, text, title, img=None, priority=Priority.Low):
     reqdata = {
         "token": PUSHOVER_API_TOKEN,
         "user": target,
