@@ -44,5 +44,5 @@ log.debug("Done loading")
 
 if __name__ == "__main__":
     log.debug("Testing push now.")
-    r = _push(PUSHOVER_USER_KEY, "This is a test", "Stockalert pushover test")
+    r = _push(PUSHOVER_USER_KEY, "This is a test", "THWatch push test.")
     log.debug("Push done: %s: %s", r, r.text)
