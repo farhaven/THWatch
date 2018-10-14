@@ -53,4 +53,4 @@ if __name__ == "__main__":
             handle_new_offer(o)
 
         log.debug("waiting 10 seconds before polling again.")
-        time.sleep(10)
+        time.sleep(60)
