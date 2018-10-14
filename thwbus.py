@@ -31,6 +31,12 @@ class LastMinuteOffer:
     def __str__(self):
         return f"<b>{self.title}</b>\n{self.meta}\nVon: {self.begin}\nBis: {self.end}\nFreie Plätze: {self.remaining_places}\n<a href=\"{self.reservation}\">Reservieren</a>"
 
+    def __hash__(self):
+        return hash((self.title, self.meta, self.begin, self.end, self.remaining_places))
+
+    def __eq__(self, other):
+        return hash(self) == hash(other)
+
 
 def parse_single_result_page(text):
     """ Extract offers from a single result page.
