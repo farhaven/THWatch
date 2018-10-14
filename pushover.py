@@ -44,6 +44,11 @@ def _push(target, text, title, do_html=True, img=None, priority=Priority.Low):
     return r
 
 
+def push(*, target=PUSHOVER_USER_KEY, text, title, priority=Priority.Low):
+    # TODO: Dedup messages
+    return _push(target, text, title, priority=priority)
+
+
 log.debug("Done loading")
 
 if __name__ == "__main__":
