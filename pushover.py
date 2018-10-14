@@ -3,8 +3,8 @@ import logging
 
 import requests
 
-PUSHOVER_API_TOKEN = "ax174e5v8i4hheyg1xgxqfw5uk8w92"
-PUSHOVER_USER_KEY = "FooBar"
+PUSHOVER_API_TOKEN = "HereBeDragons"
+PUSHOVER_USER_KEY  = "FooBar"
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
