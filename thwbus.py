@@ -82,7 +82,7 @@ def parse_single_result_page(text):
     return offers, None
 
 
-if __name__ == "__main__":
+def get_last_minute_offers():
     headers = {
         "Referrer": basehost,
         "User-Agent": "Here Be Dragons"
@@ -98,6 +98,12 @@ if __name__ == "__main__":
         pageoffers, url = parse_single_result_page(resp.text)
         log.debug("Got %s page offers", len(pageoffers))
         offers.extend(pageoffers)
+
+    return offers
+
+
+if __name__ == "__main__":
+    offers = get_last_minute_offers()
 
     print("Got", len(offers), "offers")
     for o in offers:
