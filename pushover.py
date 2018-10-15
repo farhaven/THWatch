@@ -1,12 +1,15 @@
 """ This module deals with pushover notifications """
 import logging
+import json
 
 from enum import Enum, unique
 
 import requests
 
-PUSHOVER_API_TOKEN = "HereBeDragons"
-PUSHOVER_USER_KEY  = "FooBar"
+with open('conf.json', 'r') as fh:
+    conf = json.load(fh)
+    PUSHOVER_API_TOKEN = conf['api_token']
+    PUSHOVER_USER_KEY = conf['target_user']
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
