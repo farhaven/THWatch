@@ -94,7 +94,7 @@ def parse_single_result_page(text):
 
     if is_last_minute(teasers[-1]):
         forward = soup.find('a', class_='forward').attrs['href']
-        return offers, '/'.join(basehost, forward)
+        return offers, '/'.join((basehost, forward))
     return offers, None
 
 
