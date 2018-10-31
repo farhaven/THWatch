@@ -5,9 +5,31 @@
 {% endblock %}
 
 {% block content %}
-  <form method="POST">
-    {{ csrf_input }}
-    {{ form }}
-    <button type="submit" class="btn btn-primary">Log in</button>
-  </form>
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Please Log In</h5>
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">Login failed!</h4>
+          {% for err in form.errors.__all__ %}
+            <p class="mb-0">{{ err }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <p class="card-text">
+        <form method="POST">
+          {{ csrf_input }}
+          <div class="form-group">
+            <label for="username">User Name</label>
+            <input class="form-control" type="text" id="username" name="username"/>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password"/>
+          </div>
+          <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+      </p>
+    </div>
+  </div>
 {% endblock %}

@@ -6,6 +6,7 @@
   (setv env (Environment (unpack-mapping options)))
   (env.globals.update
     {"static" staticfiles_storage.url
+     "str" str
      "url" reverse})
   (print "Generated env" env.globals)
   env)
