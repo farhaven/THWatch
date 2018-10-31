@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block content %}
-  Here be content
-  <p>
-    <a href="{{ static('frontend/test.txt') }}">test.txt</a>
-  </p>
+Here be content
+<p>
+  <a href="{{ static('frontend/test.txt') }}">test.txt</a>
+</p>
+<p>
+  You are {{ request.user }}. <a href="{{ url('frontend.logout') }}">Log out</a>
+</p>
 {% endblock %}

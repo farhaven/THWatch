@@ -22,13 +22,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 ; See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 ; SECURITY WARNING: keep the secret key used in production secret!
-(setv SECRET-KEY "fw5r-^6t@grrc74@bmh5@2==^9a*@*1+#!_o(ltj_*ym2u#8z3")
-
-; SECURITY WARNING: don't run with debug turned on in production!
-(setv DEBUG True)
-
-(setv ALLOWED_HOSTS [])
-
+(setv SECRET-KEY "fw5r-^6t@grrc74@bmh5@2==^9a*@*1+#!_o(ltj_*ym2u#8z3"
+      DEBUG True ; SECURITY WARNING: don't run with debug turned on in production!
+      ALLOWED_HOSTS [])
 
 ; Application definition
 
@@ -95,3 +91,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 ; https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 (setv STATIC_URL "/static/")
+
+; Authentication
+(setv LOGIN-REDIRECT-URL "/frontend/")
