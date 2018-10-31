@@ -17,6 +17,9 @@
           </li>
         </ul>
         <div class="ml-auto">
+          {% if request.user.is_superuser %}
+            <a class="btn btn-secondary" href="/admin">Admin</a>
+          {% endif %}
           <a class="btn btn-secondary" href="{{ url('frontend.logout') }}">Log out {{ request.user }}</a>
         </div>
       </div>
