@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block content %}
-Here be content
-<p>
-  <a href="{{ static('frontend/test.txt') }}">test.txt</a>
-</p>
-<p>
-  You are {{ request.user }}. <a href="{{ url('frontend.logout') }}">Log out</a>
-</p>
+  <table class="table">
+    <tr><th>Name</th><th>Pattern</th></tr>
+    {% for p in patterns %}
+      <tr><td>{{ p.name }}</td><td>{{ p.pattern }}</td></tr>
+    {% endfor %}
+  </table>
 {% endblock %}

@@ -8,5 +8,4 @@
     {"static" staticfiles_storage.url
      "str" str
      "url" reverse})
-  (print "Generated env" env.globals)
   env)
