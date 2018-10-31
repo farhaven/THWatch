@@ -53,6 +53,14 @@ ROOT_URLCONF = 'thwatch.urls'
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': ['frontend/templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'frontend.jinja2.environment'
+        }
+    },
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
