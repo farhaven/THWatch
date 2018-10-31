@@ -1,2 +1,3 @@
 requests
 bs4
+django>=2.0
