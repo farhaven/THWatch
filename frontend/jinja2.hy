@@ -3,9 +3,9 @@
         [jinja2 [Environment]])
 
 (defn environment [&kwargs options]
-  (print "Creating Jinja2 environment")
   (setv env (Environment (unpack-mapping options)))
   (env.globals.update
-    {:static staticfiles_storage.url
-     :url reverse})
+    {"static" staticfiles_storage.url
+     "url" reverse})
+  (print "Generated env" env.globals)
   env)

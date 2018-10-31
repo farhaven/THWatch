@@ -1,3 +1,3 @@
 ; This module contains models
 
-(import django.db [models])
+(import [django.db [models]])
