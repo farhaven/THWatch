@@ -1,5 +1,7 @@
 bs4
+celery
 django>=2.0
 hy
 jinja2
+redis
 requests
