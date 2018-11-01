@@ -34,7 +34,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
                       "django.contrib.sessions"
                       "django.contrib.messages"
                       "django.contrib.staticfiles"
-                      "frontend"])
+                      "frontend"
+                      "backend"])
 
 (setv MIDDLEWARE ["django.middleware.security.SecurityMiddleware"
                   "django.contrib.sessions.middleware.SessionMiddleware"

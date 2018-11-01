@@ -6,7 +6,8 @@
         [django.views.generic [TemplateView View]])
 
 (import [frontend.models :as models]
-        [frontend.tasks :as tasks])
+        frontend.tasks
+        backend.tasks)
 
 
 (defclass Index [LoginRequiredMixin TemplateView]
@@ -24,7 +25,8 @@
   (setv login-url (reverse-lazy "frontend.login"))
   (defn get [self request]
     (print "Test GET")
-    (tasks.test-task.delay "a" "b" "c")
+    (frontend.tasks.test-task.delay "a" "b" "c")
+    (backend.tasks.test-task.delay "test")
     (HttpResponseRedirect (reverse "frontend.index"))))
 
 
