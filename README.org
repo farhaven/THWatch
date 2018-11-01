@@ -1,0 +1,21 @@
+* Installation
+** External requirements
+   - ~redis~
+   - ~python 3~
+** Setup process
+   #+BEGIN_EXAMPLE
+   $ python3 -m venv venv
+   $ . venv/bin/activate
+   $ pip3 install -r requirements.txt
+   $ ./manage.py migrate
+   $ ./manage.py createsuperuser
+   #+END_EXAMPLE
+* Running it
+  #+BEGIN_EXAMPLE
+  $ redis-server &
+  $ celery -A thwatch worker -l info &
+  $ celery -A thwatch beat -l info &
+  $ ./manage.py runserver
+  #+END_EXAMPLE
+
+  Then browse to http://localhost:8000
