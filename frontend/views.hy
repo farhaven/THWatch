@@ -14,7 +14,6 @@
   (setv template-name "index.html.j2")
 
   (defn get-context-data [self]
-    (print "Returning context data")
     (setv context (.get-context-data (super)))
     (assoc context "patterns"
            (models.Pattern.objects.filter :owner self.request.user))

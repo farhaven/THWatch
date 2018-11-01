@@ -3,6 +3,6 @@
 
 (setv logger (get-task-logger --name--))
 
-(with-decorator (task :name "test-task")
+(with-decorator (task :name "test-task" :bind True)
   (defn test-task [&rest args]
     (logger.info "Would do some thing now %s" args)))
