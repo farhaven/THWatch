@@ -1,5 +1,5 @@
-requests
 bs4
 django>=2.0
 hy
 jinja2
+requests
