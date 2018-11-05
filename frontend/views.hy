@@ -18,7 +18,21 @@
     (setv context (.get-context-data (super)))
     (assoc context "patterns"
            (models.Pattern.objects.filter :owner self.request.user))
-    context))
+    (try
+      (assoc context "settings"
+             (models.UserSettings.objects.get :owner self.request.user))
+      (except [models.UserSettings.DoesNotExist]
+        (assoc context "settings" {"pushover_user" ""})))
+
+    context)
+
+  (defn post [self request]
+    (print request.POST)
+    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user))
+    (setv settings.pushover-user (get request.POST "pushover-user"))
+    (settings.save)
+    (HttpResponseRedirect (reverse-lazy "frontend.index"))
+    ))
 
 
 (defclass Test [LoginRequiredMixin View]
