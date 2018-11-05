@@ -1,13 +1,10 @@
 {% extends "base.html.j2" %}
 
 {% block title %}
-  Here be dragons
+  THWatch
 {% endblock %}
 
 {% block content %}
-<p>
-  <a href="{{ url('frontend.test') }}" class="btn btn-danger">TEST</a>
-</p>
 <p>
   <table class="table">
     <tr><th>Name</th><th>Pattern</th><th></th></tr>
@@ -20,7 +17,7 @@
             {{ csrf_input }}
             <input type="hidden" value="{{ p.pk }}" name="pk"/>
             <input type="hidden" value="delete-pattern" name="action"/>
-            <button type="submit" class="btn btn-danger">X</button>
+            <button type="submit" class="btn btn-danger btn-sm">X</button>
           </form>
         </td>
       </tr>
