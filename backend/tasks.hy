@@ -8,15 +8,23 @@
 
 (import [frontend.models :as models]
         [backend.thwbus :as thwbus]
+        [backend.pushover [push :as pushover]]
         [thwatch.celery [app]])
 
 (setv logger (get-task-logger --name--))
 
 (defclass NotificationTask [Task]
-  (defn run [self user offer]
-    (logger.info "Notifying %s of %s now" user (offer.stable-hash))
-
-    ))
+  (setv ignore-result True)
+  (defn run [self settings-pk offer-data]
+    (setv settings (models.UserSettings.objects.get :pk settings-pk))
+    (setv offer (thwbus.LastMinuteOffer.from-serializable-dict offer-data))
+    (logger.info "Notifying %s of %s now" settings (offer.stable-hash))
+    (setv res (pushover :text (str offer)
+                        :title "Neuer Last-Minute-Platz verfügbar" ;; TODO: i18n
+                        :target settings.pushover-user
+                        ; TODO: Priority?
+                        ))
+    (logger.debug "Result: %s" res)))
 
 (defclass NotificationDispatcher [Task]
   "This tasks decides who gets notified of an offer and in what way. It then spawns a bunch of
@@ -28,7 +36,12 @@
     (setv patterns (models.Pattern.objects.all)) ;; TODO: This is ugly. Filter somehow in DB?
     (for [p patterns]
       (when (.match (p.regex) offer.title)
-        (NotificationTask.delay p.owner offer)))))
+        (try
+          (setv settings (models.UserSettings.objects.get :owner p.owner))
+          (except [models.UserSettings.DoesNotExist]
+            ; No settings, so we can't notify the user anyway
+            (continue)))
+        (NotificationTask.delay settings.pk offer-data)))))
 
 (defclass PeriodicPoll [Task]
   (setv run-every 10)

@@ -27,9 +27,8 @@
     context)
 
   (defn post [self request]
-    (print request.POST)
-    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user))
-    (setv settings.pushover-user (get request.POST "pushover-user"))
+    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
+          settings.pushover-user (get request.POST "pushover-user"))
     (settings.save)
     (HttpResponseRedirect (reverse-lazy "frontend.index"))
     ))
