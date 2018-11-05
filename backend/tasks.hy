@@ -44,7 +44,7 @@
         (NotificationTask.delay settings.pk offer-data)))))
 
 (defclass PeriodicPoll [Task]
-  (setv run-every 10)
+  (setv run-every 600)
   (setv ignore-result True)
 
   (defn --init-- [self]

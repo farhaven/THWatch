@@ -27,9 +27,19 @@
     context)
 
   (defn post [self request]
-    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
-          settings.pushover-user (get request.POST "pushover-user"))
-    (settings.save)
+    (cond
+      [(= (get request.POST "action") "update-pushover")
+       (do (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
+                 settings.pushover-user (get request.POST "pushover-user"))
+           (settings.save))]
+      [(= (get request.POST "action") "add-pattern")
+       (do
+         (setv (, p created) (models.Pattern.objects.get-or-create :owner request.user
+                                                                   :name (get request.POST "name")
+                                                                   :pattern (get request.POST "pattern")))
+         (p.save))]
+      [(= (get request.POST "action") "delete-pattern")
+       (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
     (HttpResponseRedirect (reverse-lazy "frontend.index"))
     ))
 

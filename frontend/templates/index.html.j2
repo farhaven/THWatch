@@ -10,17 +10,42 @@
 </p>
 <p>
   <table class="table">
-    <tr><th>Name</th><th>Pattern</th></tr>
+    <tr><th>Name</th><th>Pattern</th><th></th></tr>
     {% for p in patterns %}
-      <tr><td>{{ p.name }}</td><td>{{ p.pattern }}</td></tr>
+      <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.pattern }}</td>
+        <td>
+          <form method="POST">
+            {{ csrf_input }}
+            <input type="hidden" value="{{ p.pk }}" name="pk"/>
+            <input type="hidden" value="delete-pattern" name="action"/>
+            <button type="submit" class="btn btn-danger">X</button>
+          </form>
+        </td>
+      </tr>
     {% endfor %}
   </table>
 </p>
+<form method="POST">
+  {{ csrf_input }}
+  <input type="hidden" name="action" value="add-pattern"/>
+
+  <label for="pattern-name">Pattern Name</label>
+  <input type="text" class="form-control" id="pattern-name" name="name" required/>
+
+  <label for="pattern-pattern">Pattern</label>
+  <input type="text" class="form-control" id="pattern-pattern" name="pattern" required/>
+
+  <button type="submit" class="btn btn-success mt-1">Add Pattern</button>
+</form>
+<hr/>
 <p>
   <form method="POST">
     {{ csrf_input }}
     <label for="pushover-user">Pushover User Key</label>
     <input class="form-control" type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+    <input type="hidden" value="update-pushover" name="action"/>
     <button type="submit" class="mt-1 btn btn-primary">Save</button>
   </form>
 </p>
