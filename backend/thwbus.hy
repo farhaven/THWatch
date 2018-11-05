@@ -103,7 +103,7 @@
   (if (is-last-minute? (get teasers -1))
       (do
         (setv forward (get (. (soup.find "a" :class_ "forward") attrs) "href"))
-        (, offers (.join "/" basehost forward)))
+        (, offers (.join "/" [basehost forward])))
       (, offers None)))
 
 (defn get-last-minute-offers []
