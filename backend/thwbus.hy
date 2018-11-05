@@ -1,5 +1,6 @@
 (import re
         logging
+        [hashlib [sha256]]
         [datetime [datetime]])
 
 (import requests
@@ -11,7 +12,7 @@
 
 (logging.basicConfig)
 (setv log (logging.getLogger --name--))
-(log.setLevel logging.DEBUG)
+(log.setLevel logging.INFO)
 
 (defclass LastMinuteOffer []
   (defn --init-- [self &kwonly title meta reservation dates remaining-places]
@@ -32,6 +33,16 @@
       :remaining-places self.remaining-places
       :reservation self.reservation))
 
+  (defn stable-hash [self]
+    "Stable hash usable over process boundaries"
+    (.hexdigest
+      (sha256 (.join b"|" (lfor x [self.title
+                                   self.meta
+                                   (self.begin.strftime "%y-%m-%d %h:%m")
+                                   (self.end.strftime "%y-%m-%d %h:%m")
+                                   (str self.remaining-places)]
+                                (x.encode 'utf-8))))))
+
   (defn --hash-- [self]
     (hash (, self.title
              self.meta
@@ -40,7 +51,25 @@
              self.remaining-places)))
 
   (defn --eq-- [self other]
-    (= (hash self) (hash other))))
+    (= (hash self) (hash other)))
+
+  (defn to-serializable-dict [self]
+    {"title" self.title
+     "meta" self.meta
+     "begin" (self.begin.strftime "%Y-%m-%d %H:%M")
+     "end" (self.end.strftime "%Y-%m-%d %H:%M")
+     "reservation" self.reservation
+     "remaining-places" self.remaining-places})
+
+  (with-decorator classmethod
+    (defn from-serializable-dict [cls data]
+      (log.debug "Reconstructing %s from %s" cls data)
+      (cls :title (get data "title")
+           :meta (get data "meta")
+           :dates [(datetime.strptime (get data "begin") "%Y-%m-%d %H:%M")
+                   (datetime.strptime (get data "end") "%Y-%m-%d %H:%M")]
+           :reservation (get data "reservation")
+           :remaining-places (get data "remaining-places")))))
 
 (defn parse-single-result-page [text]
   " Extract offers from a single result page.
