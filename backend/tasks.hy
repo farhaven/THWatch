@@ -30,7 +30,7 @@
                                              :db 0)))
 
   (defn add-offer-to-db [self offers]
-    (self.redis-conn.sadd "known-offers" (lfor x offers (x.stable-hash))))
+    (self.redis-conn.sadd "known-offers" #* (lfor x offers (x.stable-hash))))
 
   (defn is-offer-known? [self offer]
     (setv res (self.redis-conn.sismember "known-offers" (offer.stable-hash)))
