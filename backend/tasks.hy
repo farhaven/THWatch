@@ -38,7 +38,7 @@
 (defclass MailPoll [Task]
   "This task periodically checks the redis DB to see if there are any pending emails. If so, it combines them and sends them out
    in a single mail"
-  [run-every 10
+  [run-every 300 ; Poll for mail every 5 minutes
    ignore-result True]
 
   (defn --init-- [self]
@@ -152,7 +152,7 @@
 
 
 (defclass PeriodicPoll [Task]
-  [run-every 25
+  [run-every 600 ; Poll every 10 minutes
    ignore-result True
    debug True]
 
