@@ -44,7 +44,7 @@
          (p.save))]
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
-    (HttpResponseRedirect (reverse-lazy "frontend.index"))
+    (HttpResponseRedirect (reverse-lazy "frontend.home"))
     ))
 
 
@@ -54,7 +54,7 @@
     (print "Test GET")
     (frontend.tasks.test-task.delay "a" "b" "c")
     (backend.tasks.test-task.delay "test")
-    (HttpResponseRedirect (reverse "frontend.index"))))
+    (HttpResponseRedirect (reverse "frontend.home"))))
 
 
 (defclass Login [LoginView]
