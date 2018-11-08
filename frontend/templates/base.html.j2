@@ -1,5 +1,5 @@
 {%- macro build_nav(current="home") %}
-  {% for item in ['home', 'notifications'] %}
+  {% for item in ['home', 'settings'] %}
     <li class="nav-item{% if current == item %} active{% endif %}">
       <a class="nav-link" href="{% if current == item %}#{% else %}{{ url('frontend.' + item) }}{% endif %}">
         {{ item | title }}

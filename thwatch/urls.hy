@@ -6,5 +6,5 @@
 
 (setv urlpatterns [(path "admin/" admin.site.urls)
                    (path "frontend/" (include "frontend.urls"))
-                   (path "" (RedirectView.as-view :pattern-name "frontend.index"
+                   (path "" (RedirectView.as-view :pattern-name "frontend.home"
                                                   :permanent False))])
