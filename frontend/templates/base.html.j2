@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ static('frontend/css/bootstrap.min.css') }}">
   </head>
   <body>
+    {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">THWatch</a>
       <div class="collapse navbar-collapse">
@@ -34,6 +35,7 @@
         </div>
       </div>
     </nav>
+    {% endblock %}
     <div class="container mt-4">
       {% block content %}<p class="alert alert-danger">Content missing!</p>{% endblock %}
     </div>
