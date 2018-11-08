@@ -16,6 +16,10 @@
           {% for err in form.errors.__all__ %}
             <p class="mb-0">{{ err }}</p>
           {% endfor %}
+          <hr/>
+          <span class="form-text text-muted">
+            If you lost your password, you can <a href="{{ url('password_reset') }}">reset it</a>.
+          </span>
         </div>
       {% endif %}
       <p class="card-text">
