@@ -16,6 +16,8 @@
 
   (defn get-context-data [self]
     (setv context (.get-context-data (super)))
+    (assoc context "active_page"
+           (.get self.request.GET "page" "notifications"))
     (try
       (assoc context "settings"
              (models.UserSettings.objects.get :owner self.request.user))

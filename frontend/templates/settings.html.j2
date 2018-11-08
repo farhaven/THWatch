@@ -1,7 +1,7 @@
 {% extends "base.html.j2" %}
 
 {% block title %}
-  THWatch: Notifications
+  THWatch: Settings
 {% endblock %}
 
 {% block navigation %}
@@ -9,27 +9,49 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  <h2>Notifications</h2>
-{% if saved_settings %}
-  <p class="alert alert-success">
-    Your changes have been saved!
-  </p>
-{% endif %}
-  <form method="POST">
-    {{ csrf_input }}
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label" for="pushover-user">Pushover User Key</label>
-      <input class="col-sm-9 form-control" type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        {% if active_page == "notifications" %}
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Notifications<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=authentication#">Authentication</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="?page=notifications#">Notifications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Authentication<span class="sr-only">(current)</span></a>
+          </li>
+        {% endif %}
+      </ul>
     </div>
+    <div class="card-body">
+      <div class="card-text">
+        {% if active_page == "notifications" %}
+          {% if saved_settings %}
+            <p class="alert alert-success">
+              Your changes have been saved!
+            </p>
+          {% endif %}
+          <form method="POST">
+            {{ csrf_input }}
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="pushover-user">Pushover User Key</label>
+              <input class="col-sm-9 form-control"
+                     type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+            </div>
 
-    <input type="hidden" value="update-pushover" name="action"/>
-    <button type="submit" class="mt-1 btn btn-primary">Save</button>
-  </form>
-</p>
-<hr/>
-<p>
-  <h2>Authentication</h2>
-  <a class="btn btn-primary" href="{{ url('frontend.password-change') }}">Change Password</a>
-</p>
+            <input type="hidden" value="update-pushover" name="action"/>
+            <button type="submit" class="mt-1 btn btn-primary">Save</button>
+          </form>
+        {% else %}
+          <a class="btn btn-primary" href="{{ url('frontend.password-change') }}">Change Password</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}
