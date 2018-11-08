@@ -31,6 +31,7 @@
           settings.pushover-user (get request.POST "pushover-user"))
     (settings.save)
     (assoc context "saved_settings" True)
+    (assoc context "settings" settings)
     (TemplateResponse request self.template-name context)))
 
 
