@@ -18,16 +18,16 @@
           {% endfor %}
           <hr/>
           <span class="form-text text-muted">
-            If you lost your password, you can <a href="{{ url('password_reset') }}">reset it</a>.
+            If you lost your password, you can <a href="{{ url('password_reset') }}">request a reset</a>.
           </span>
         </div>
       {% endif %}
-      <p class="card-text">
+      <div class="card-text">
         <form method="POST">
           {{ csrf_input }}
           <div class="form-group">
             <label for="username">User Name</label>
-            <input class="form-control" type="text" id="username" name="username"/>
+            <input class="form-control" type="text" id="username" name="username" autofocus/>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -35,7 +35,7 @@
           </div>
           <button type="submit" class="btn btn-primary">Log in</button>
         </form>
-      </p>
+      </div>
     </div>
   </div>
 {% endblock %}
