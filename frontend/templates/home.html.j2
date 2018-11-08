@@ -15,7 +15,7 @@
     {% for p in patterns %}
       <tr>
         <td>{{ p.name }}</td>
-        <td>{{ p.pattern }}</td>
+        <td><code>{{ p.pattern }}</code></td>
         <td>
           <form method="POST">
             {{ csrf_input }}
