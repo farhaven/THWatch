@@ -1,6 +1,6 @@
 (import [django.http [HttpResponse HttpResponseRedirect]]
         [django.contrib.auth [logout]]
-        [django.contrib.auth.views [LoginView]]
+        [django.contrib.auth.views [LoginView PasswordChangeView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
         [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
@@ -53,6 +53,10 @@
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
     (HttpResponseRedirect (reverse-lazy "frontend.home"))))
+
+
+(defclass PasswordChange [PasswordChangeView]
+  [template-name "password-change.html.j2"])
 
 
 (defclass Login [LoginView]

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block navigation %}
-  {{ build_nav(current="notifications") }}
+  {{ build_nav(current="settings") }}
 {% endblock %}
 
 {% block content %}
@@ -30,6 +30,6 @@
 <hr/>
 <p>
   <h2>Authentication</h2>
-  <a class="btn btn-primary" href="{{ url('password_change') }}">Change Password</a>
+  <a class="btn btn-primary" href="{{ url('frontend.password-change') }}">Change Password</a>
 </p>
 {% endblock %}
