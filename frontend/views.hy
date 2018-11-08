@@ -59,6 +59,9 @@
   [template-name "password-change.html.j2"])
 
 
+(defclass PasswordChangeDone [LoginRequiredMixin TemplateView]
+  [template-name "password-change-done.html.j2"])
+
 (defclass Login [LoginView]
   (setv template-name "login.html.j2"))
 

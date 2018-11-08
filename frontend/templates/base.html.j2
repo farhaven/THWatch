@@ -1,7 +1,7 @@
-{%- macro build_nav(current="home") %}
+{%- macro build_nav(current="home", active=False) %}
   {% for item in ['home', 'settings'] %}
     <li class="nav-item{% if current == item %} active{% endif %}">
-      <a class="nav-link" href="{% if current == item %}#{% else %}{{ url('frontend.' + item) }}{% endif %}">
+      <a class="nav-link" href="{% if current == item and not active %}#{% else %}{{ url('frontend.' + item) }}{% endif %}">
         {{ item | title }}
         {% if current == item %}
           <span class="sr-only">(current)</span>
