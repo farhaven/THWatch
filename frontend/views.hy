@@ -11,8 +11,8 @@
         backend.tasks)
 
 
-(defclass Notifications [LoginRequiredMixin TemplateView]
-  [template-name "notifications.html.j2"]
+(defclass Settings [LoginRequiredMixin TemplateView]
+  [template-name "settings.html.j2"]
 
   (defn get-context-data [self]
     (setv context (.get-context-data (super)))
