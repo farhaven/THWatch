@@ -28,11 +28,15 @@
   {{ csrf_input }}
   <input type="hidden" name="action" value="add-pattern"/>
 
-  <label for="pattern-name">Pattern Name</label>
-  <input type="text" class="form-control" id="pattern-name" name="name" required/>
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label" for="pattern-name">Pattern Name</label>
+    <input class="col-sm-9 form-control" type="text" id="pattern-name" name="name" required/>
+  </div>
 
-  <label for="pattern-pattern">Pattern</label>
-  <input type="text" class="form-control" id="pattern-pattern" name="pattern" required/>
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label" for="pattern-pattern">Pattern</label>
+    <input class="col-sm-9 form-control" type="text" id="pattern-pattern" name="pattern" required/>
+  </div>
 
   <button type="submit" class="btn btn-success mt-1">Add Pattern</button>
 </form>
@@ -40,8 +44,11 @@
 <p>
   <form method="POST">
     {{ csrf_input }}
-    <label for="pushover-user">Pushover User Key</label>
-    <input class="form-control" type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label" for="pushover-user">Pushover User Key</label>
+      <input class="col-sm-9 form-control" type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+    </div>
+
     <input type="hidden" value="update-pushover" name="action"/>
     <button type="submit" class="mt-1 btn btn-primary">Save</button>
   </form>
