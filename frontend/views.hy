@@ -26,9 +26,11 @@
     context)
 
   (defn post [self request]
+    (print request.POST)
     (setv context (self.get-context-data))
     (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
-          settings.pushover-user (get request.POST "pushover-user"))
+          settings.pushover-user (get request.POST "pushover-user")
+          settings.notify-via-mail (= (.get request.POST "notify-mail" "off") "on"))
     (settings.save)
     (assoc context "saved_settings" True)
     (assoc context "settings" settings)

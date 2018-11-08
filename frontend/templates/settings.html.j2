@@ -44,8 +44,14 @@
               <input class="col-sm-9 form-control"
                      type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
             </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input"
+                     name="notify-mail" id="notify-mail"{% if settings.notify_via_mail %} checked{% endif %}>
+              <label class="form-check-label" for="notify-mail">
+                Also notify me via email to <a href="mailto:{{ request.user.email }}">{{ request.user.email }}</a>
+              </label>
+            </div>
 
-            <input type="hidden" value="update-pushover" name="action"/>
             <button type="submit" class="mt-1 btn btn-primary">Save</button>
           </form>
         {% else %}

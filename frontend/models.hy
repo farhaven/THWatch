@@ -5,11 +5,12 @@
         [django.contrib.auth.models [User]])
 
 (defclass UserSettings [models.Model]
-  (setv owner (models.ForeignKey User :on-delete models.CASCADE))
-  (setv pushover-user (models.CharField "Pushover User Key"
-                                        :max-length 200
-                                        :blank True)) ; TODO: Add validation
-  )
+  ; TODO: Add validation
+  [owner (models.ForeignKey User :on-delete models.CASCADE)
+   pushover-user (models.CharField "Pushover User Key"
+                                   :max-length 200
+                                   :blank True)
+   notify-via-mail (models.BooleanField "Notify via email")])
 
 (defclass Pattern [models.Model]
   (setv owner (models.ForeignKey User :on-delete models.CASCADE))
