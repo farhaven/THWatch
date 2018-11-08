@@ -1,6 +1,6 @@
 (import [django.http [HttpResponse HttpResponseRedirect]]
         [django.contrib.auth [logout]]
-        [django.contrib.auth.views [LoginView PasswordChangeView PasswordResetView]]
+        [django.contrib.auth.views [LoginView PasswordChangeView PasswordResetView PasswordResetConfirmView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
         [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
@@ -66,6 +66,12 @@
 
 (defclass PasswordResetDone [TemplateView]
   [template-name "password-reset-done.html.j2"])
+
+(defclass PasswordResetConfirm [PasswordResetConfirmView]
+  [template-name "password-reset-confirm.html.j2"])
+
+(defclass PasswordResetComplete [TemplateView]
+  [template-name "password-reset-complete.html.j2"])
 
 (defclass Login [LoginView]
   (setv template-name "login.html.j2"))
