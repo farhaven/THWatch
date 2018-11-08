@@ -52,21 +52,12 @@
          (p.save))]
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
-    (HttpResponseRedirect (reverse-lazy "frontend.home"))
-    ))
-
-
-(defclass Test [LoginRequiredMixin View]
-  (setv login-url (reverse-lazy "frontend.login"))
-  (defn get [self request]
-    (print "Test GET")
-    (frontend.tasks.test-task.delay "a" "b" "c")
-    (backend.tasks.test-task.delay "test")
-    (HttpResponseRedirect (reverse "frontend.home"))))
+    (HttpResponseRedirect (reverse-lazy "frontend.home"))))
 
 
 (defclass Login [LoginView]
   (setv template-name "login.html.j2"))
+
 
 (defclass Logout [View]
   (defn get [self request]
