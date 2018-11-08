@@ -1,4 +1,11 @@
 {
-  "api_token": "YourPushoverApiKeyHere",
-  "target_user": "YourPushoverUserKeyHere"
+    "api_token": "YourPushoverApiKeyHere",
+    "target_user": "YourPushoverUserKeyHere",
+    "mail": {
+        "host": "mx.example.com",
+        "port": 587,
+        "user": "example",
+        "password": "ThisIsNotAPassword",
+        "mail-from": "thwatch@example.com"
+    }
 }

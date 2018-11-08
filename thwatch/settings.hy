@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-(import os)
+(import os
+        json)
 
 ; Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 (setv BASE-DIR
@@ -104,3 +105,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
       CELERY_TASK_SERIALIZER "json"
       CELERY_RESULT_SERIALIZER "json"
       CELERY_TIMEZONE "UTC")
+
+; import local settings from conf.json
+(with [fh (open "conf.json" 'r)]
+  (setv -local-conf (get (json.load fh) "mail")
+        EMAIL_HOST (get -local-conf "host")
+        EMAIL_PORT (get -local-conf "port")
+        EMAIL_HOST_USER (get -local-conf "user")
+        EMAIL_HOST_PASSWORD (get -local-conf "password")
+        EMAIL_USE_TLS True ;; XXX
+        DEFAULT_FROM_EMAIL (get -local-conf "mail-from")))
