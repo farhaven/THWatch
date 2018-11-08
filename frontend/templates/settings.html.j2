@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block content %}
-  <p>
-    <h2>Notifications</h2>
-  {% if saved_settings %}
-    <p class="alert alert-success">
-      Your changes have been saved!
-    </p>
-  {% endif %}
+<p>
+  <h2>Notifications</h2>
+{% if saved_settings %}
+  <p class="alert alert-success">
+    Your changes have been saved!
+  </p>
+{% endif %}
   <form method="POST">
     {{ csrf_input }}
     <div class="form-group row">
@@ -26,8 +26,8 @@
     <input type="hidden" value="update-pushover" name="action"/>
     <button type="submit" class="mt-1 btn btn-primary">Save</button>
   </form>
-  </p>
-  <hr/>
+</p>
+<hr/>
 <p>
   <h2>Authentication</h2>
   <a class="btn btn-primary" href="{{ url('password_change') }}">Change Password</a>
