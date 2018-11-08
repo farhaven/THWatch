@@ -2,6 +2,7 @@
         [django.contrib.auth [logout]]
         [django.contrib.auth.views [LoginView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
+        [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
         [django.views.generic [TemplateView View]])
 
@@ -11,7 +12,24 @@
 
 
 (defclass Notifications [LoginRequiredMixin TemplateView]
-  [template-name "notifications.html.j2"])
+  [template-name "notifications.html.j2"]
+
+  (defn get-context-data [self]
+    (setv context (.get-context-data (super)))
+    (try
+      (assoc context "settings"
+             (models.UserSettings.objects.get :owner self.request.user))
+      (except [models.UserSettings.DoesNotExist]
+        (assoc context "settings" {"pushover_user" ""})))
+    context)
+
+  (defn post [self request]
+    (setv context (self.get-context-data))
+    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
+          settings.pushover-user (get request.POST "pushover-user"))
+    (settings.save)
+    (assoc context "saved_settings" True)
+    (TemplateResponse request self.template-name context)))
 
 
 (defclass Home [LoginRequiredMixin TemplateView]
@@ -22,20 +40,10 @@
     (setv context (.get-context-data (super)))
     (assoc context "patterns"
            (models.Pattern.objects.filter :owner self.request.user))
-    (try
-      (assoc context "settings"
-             (models.UserSettings.objects.get :owner self.request.user))
-      (except [models.UserSettings.DoesNotExist]
-        (assoc context "settings" {"pushover_user" ""})))
-
     context)
 
   (defn post [self request]
     (cond
-      [(= (get request.POST "action") "update-pushover")
-       (do (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
-                 settings.pushover-user (get request.POST "pushover-user"))
-           (settings.save))]
       [(= (get request.POST "action") "add-pattern")
        (do
          (setv (, p created) (models.Pattern.objects.get-or-create :owner request.user

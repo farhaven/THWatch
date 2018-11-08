@@ -7,3 +7,21 @@
 {% block navigation %}
   {{ build_nav(current="notifications") }}
 {% endblock %}
+
+{% block content %}
+  {% if saved_settings %}
+    <p class="alert alert-success">
+      Your changes have been saved!
+    </p>
+  {% endif %}
+  <form method="POST">
+    {{ csrf_input }}
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label" for="pushover-user">Pushover User Key</label>
+      <input class="col-sm-9 form-control" type="text" name="pushover-user" id="pushover-usr" value="{{ settings.pushover_user }}"/>
+    </div>
+
+    <input type="hidden" value="update-pushover" name="action"/>
+    <button type="submit" class="mt-1 btn btn-primary">Save</button>
+  </form>
+{% endblock %}
