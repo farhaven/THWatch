@@ -2,6 +2,7 @@
         [django.contrib.auth [logout]]
         [django.contrib.auth.views [LoginView PasswordChangeView PasswordResetView PasswordResetConfirmView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
+        [django.core.mail [send-mail]]
         [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
         [django.views.generic [TemplateView View]])
@@ -57,8 +58,17 @@
          (p.save))]
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
-    (HttpResponseRedirect (reverse-lazy "frontend.home"))))
+    (HttpResponseRedirect (reverse-lazy "frontend.settings" :args {"page" "test"}))))
 
+
+(defclass TestEmail [LoginRequiredMixin View]
+  (defn get [self request]
+    (print "Sending test email to" request.user "now")
+    (send-mail :subject "Test"
+               :message "This is a test"
+               :from-email "thwatch@unobtanium.de" ; XXX
+               :recipient-list [request.user.email])
+    (HttpResponseRedirect (reverse-lazy "frontend.home"))))
 
 (defclass PasswordChange [LoginRequiredMixin PasswordChangeView]
   [template-name "password-change.html.j2"])
