@@ -10,9 +10,13 @@
         backend.tasks)
 
 
-(defclass Index [LoginRequiredMixin TemplateView]
+(defclass Notifications [LoginRequiredMixin TemplateView]
+  [template-name "notifications.html.j2"])
+
+
+(defclass Home [LoginRequiredMixin TemplateView]
   (setv login-url (reverse-lazy "frontend.login"))
-  (setv template-name "index.html.j2")
+  (setv template-name "home.html.j2")
 
   (defn get-context-data [self]
     (setv context (.get-context-data (super)))
