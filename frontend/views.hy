@@ -53,16 +53,20 @@
     context)
 
   (defn post [self request]
+    (setv context (self.get-context-data))
     (cond
       [(= (get request.POST "action") "add-pattern")
        (do
          (setv (, p created) (models.Pattern.objects.get-or-create :owner request.user
                                                                    :name (get request.POST "name")
                                                                    :pattern (get request.POST "pattern")))
-         (p.save))]
+         (p.save)
+         (assoc context "active_page" "patterns"))]
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
-    (HttpResponseRedirect (reverse-lazy "frontend.settings" :args {"page" "test"}))))
+    (setv resp (HttpResponseRedirect (reverse-lazy "frontend.home")))
+    (assoc resp "Location" (+ (get resp "Location") "?page=" (get context "active_page")))
+    resp))
 
 
 (defclass RequestAccount [FormView]
@@ -83,8 +87,7 @@
                :from-email "thwatch@unobtanium.de" ; XXX
                :recipient-list ["gbe@unobtanium.de"] ; XXX
                )
-    (TemplateResponse self.request self.template-success {"form" form})
-    ))
+    (TemplateResponse self.request self.template-success {"form" form})))
 
 
 (defclass TestEmail [LoginRequiredMixin View]
