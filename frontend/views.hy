@@ -31,7 +31,12 @@
   (defn post [self request]
     (print request.POST)
     (setv context (self.get-context-data))
-    (setv (, settings created) (models.UserSettings.objects.get-or-create :owner request.user)
+    (setv settings (try
+                     (models.UserSettings.objects.get :owner request.user)
+                     (except [models.UserSettings.DoesNotExist]
+                       (models.UserSettings :owner request.user
+                                            :pushover-user ""
+                                            :notify-via-mail False)))
           settings.pushover-user (get request.POST "pushover-user")
           settings.notify-via-mail (= (.get request.POST "notify-mail" "off") "on"))
     (settings.save)
