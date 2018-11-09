@@ -2,12 +2,14 @@
         [django.contrib.auth [logout]]
         [django.contrib.auth.views [LoginView PasswordChangeView PasswordResetView PasswordResetConfirmView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
+        [django.contrib.auth.models [User]]
         [django.core.mail [send-mail]]
         [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
-        [django.views.generic [TemplateView View]])
+        [django.views.generic [TemplateView FormView View]])
 
 (import [frontend.models :as models]
+        [frontend.forms [RequestAccountForm]]
         frontend.tasks
         backend.tasks)
 
@@ -61,6 +63,28 @@
       [(= (get request.POST "action") "delete-pattern")
        (.delete (models.Pattern.objects.get :pk (get request.POST "pk")))])
     (HttpResponseRedirect (reverse-lazy "frontend.settings" :args {"page" "test"}))))
+
+
+(defclass RequestAccount [FormView]
+  [template-name "request-account.html.j2"
+   template-success "request-account-done.html.j2"
+   form-class RequestAccountForm]
+
+  (defn form-valid [self form]
+    (setv user (User.objects.create-user (get form.cleaned-data 'name)
+                                         (get form.cleaned-data 'email)
+                                         (get form.cleaned-data 'password1)))
+    (setv user.is-active False)
+    (user.save)
+    (send-mail :subject "New THWatch user"
+               :message (.format "{name} ({email}) created a new account on THWatch."
+                                 :name (get form.cleaned-data 'name)
+                                 :email (get form.cleaned-data 'email))
+               :from-email "thwatch@unobtanium.de" ; XXX
+               :recipient-list ["gbe@unobtanium.de"] ; XXX
+               )
+    (TemplateResponse self.request self.template-success {"form" form})
+    ))
 
 
 (defclass TestEmail [LoginRequiredMixin View]

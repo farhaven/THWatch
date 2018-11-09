@@ -1,0 +1,18 @@
+{% extends "base.html.j2" %}
+
+{% block title %}
+  THWatch: Request an account
+{% endblock %}
+
+{% block navbar %}{# Disabled #}{% endblock %}
+
+{% block content %}
+  <div class="card mt-4 text-white bg-success">
+    <h5 class="card-header">Account requested</h5>
+    <div class="card-body">
+      An account has been requested. You'll have to wait for someone to enable it.
+      <hr/>
+      <a href="{{ url('frontend.login') }}" class="btn btn-dark btn-sm float-right">Go back to login page</a>
+    </div>
+  </div>
+{% endblock %}

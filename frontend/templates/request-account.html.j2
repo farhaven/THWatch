@@ -1,0 +1,56 @@
+{% extends "base.html.j2" %}
+
+{% block title %}
+  THWatch: Request an account
+{% endblock %}
+
+{% block navbar %}{# disable navbar #}{% endblock %}
+
+{% block content %}
+  <div class="card mt-4">
+    <h5 class="card-header">Request a new account</h5>
+    <div class="card-body">
+      {% if form.errors.__all__ %}
+        <div class="alert alert-danger">
+        {{ form.errors.__all__ | join(" ") }}
+        </div>
+      {% endif %}
+      <form method="POST">
+        {{ csrf_input }}
+        <div class="form-group">
+          <label for="name">Username</label>
+          <input class="form-control{% if 'name' in form.errors %} is-invalid{% endif %}"
+                 type="text" id="name" name="name" autofocus/>
+          {% if 'name' in form.errors %}
+            <div class="invalid-feedback">{{ form.errors.name | join(' ') }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control{% if 'email' in form.errors %} is-invalid{% endif %}"
+                 type="email" id="email" name="email"/>
+          {% if 'email' in form.errors %}
+            <div class="invalid-feedback">{{ form.errors.email | join(' ') }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control{% if 'password1' in form.errors %} is-invalid{% endif %}"
+                 type="password" id="password1" name="password1" autofocus/>
+          {% if 'password1' in form.errors %}
+            <div class="invalid-feedback">{{ form.errors.password1 | join(' ') }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label for="password2">Password (repeat)</label>
+          <input class="form-control{% if 'password2' in form.errors %} is-invalid{% endif %}"
+                 type="password" id="password2" name="password2" autofocus/>
+          {% if 'password2' in form.errors %}
+            <div class="invalid-feedback">{{ form.errors.password2 | join(' ') }}</div>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Request an account</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

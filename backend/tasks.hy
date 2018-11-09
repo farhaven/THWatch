@@ -145,6 +145,9 @@
             (logger.debug "User %s has no settings." p.owner)
             ; No settings, so we can't notify the user anyway
             (continue)))
+        (unless p.owner.is-active
+          (logger.info "Not sending any messages to %s, they are not active" p.owner)
+          (continue))
         (when (!= (len settings.pushover-user) 0)
           (NotificationTaskPushover.delay settings.pk offer-data))
         (when settings.notify-via-mail

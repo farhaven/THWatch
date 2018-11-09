@@ -4,6 +4,7 @@
 
 (setv urlpatterns [(path "" (views.Home.as_view) :name "frontend.home")
                    (path "settings" (views.Settings.as_view) :name "frontend.settings")
+                   (path "users/request_account" (views.RequestAccount.as_view) :name "frontend.request-account")
                    (path "test-email" (views.TestEmail.as_view) :name "frontend.test-email")
                    (path "users/password_change" (views.PasswordChange.as_view) :name "frontend.password-change")
                    (path "users/password_change/done/" (views.PasswordChangeDone.as_view) :name "password_change_done")
