@@ -9,39 +9,57 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
-  {{ csrf_input }}
-  <input type="hidden" name="action" value="add-pattern"/>
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        {% for p in ['patterns', 'add-pattern'] %}
+          <li class="nav-item">
+            <a class="nav-link{% if active_page == p %} active{% endif %}"
+               href="{% if active_page == p %}#{% else %}?page={{ p }}{% endif %}">
+              {{ p | title }}{% if active_page == p %}<span class="sr-only">(current)</span>{% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <div class="form-group row">
-    <label class="col-sm-3 col-form-label" for="pattern-name">Pattern Name</label>
-    <input class="col-sm-9 form-control" type="text" id="pattern-name" name="name" required/>
+    <div class="card-body">
+      {% if active_page == "patterns" %}
+        <table class="table">
+          <tr><th>Name</th><th>Pattern</th><th></th></tr>
+          {% for p in patterns %}
+            <tr>
+              <td>{{ p.name }}</td>
+              <td><code>{{ p.pattern }}</code></td>
+              <td>
+                <form method="POST">
+                  {{ csrf_input }}
+                  <input type="hidden" value="{{ p.pk }}" name="pk"/>
+                  <input type="hidden" value="delete-pattern" name="action"/>
+                  <button type="submit" class="btn btn-danger btn-sm">X</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <form method="POST">
+          {{ csrf_input }}
+          <input type="hidden" name="action" value="add-pattern"/>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="pattern-name">Pattern Name</label>
+            <input class="col-sm-9 form-control" type="text" id="pattern-name" name="name" required/>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="pattern-pattern">Pattern</label>
+            <input class="col-sm-9 form-control" type="text" id="pattern-pattern" name="pattern" required/>
+          </div>
+
+          <button type="submit" class="btn btn-success mt-1">Add Pattern</button>
+        </form>
+      {% endif %}
+    </div>
   </div>
-
-  <div class="form-group row">
-    <label class="col-sm-3 col-form-label" for="pattern-pattern">Pattern</label>
-    <input class="col-sm-9 form-control" type="text" id="pattern-pattern" name="pattern" required/>
-  </div>
-
-  <button type="submit" class="btn btn-success mt-1">Add Pattern</button>
-</form>
-<p>
-  <table class="table">
-    <tr><th>Name</th><th>Pattern</th><th></th></tr>
-    {% for p in patterns %}
-      <tr>
-        <td>{{ p.name }}</td>
-        <td><code>{{ p.pattern }}</code></td>
-        <td>
-          <form method="POST">
-            {{ csrf_input }}
-            <input type="hidden" value="{{ p.pk }}" name="pk"/>
-            <input type="hidden" value="delete-pattern" name="action"/>
-            <button type="submit" class="btn btn-danger btn-sm">X</button>
-          </form>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-</p>
 {% endblock %}

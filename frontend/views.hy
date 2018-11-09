@@ -44,6 +44,8 @@
 
   (defn get-context-data [self]
     (setv context (.get-context-data (super)))
+    (assoc context "active_page"
+           (.get self.request.GET "page" "patterns"))
     (assoc context "patterns"
            (models.Pattern.objects.filter :owner self.request.user))
     context)
