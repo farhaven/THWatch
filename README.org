@@ -10,6 +10,8 @@
    $ ./manage.py migrate
    $ ./manage.py createsuperuser
    #+END_EXAMPLE
+* Configuration
+  Copy ~conf.json.dist~ to ~conf.json~ and edit its contents to suit your needs.
 * Running it
   #+BEGIN_EXAMPLE
   $ redis-server &
