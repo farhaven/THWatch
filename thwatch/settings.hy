@@ -108,10 +108,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 ; import local settings from conf.json
 (with [fh (open "conf.json" 'r)]
-  (setv -local-conf (get (json.load fh) "mail")
-        EMAIL_HOST (get -local-conf "host")
-        EMAIL_PORT (get -local-conf "port")
-        EMAIL_HOST_USER (get -local-conf "user")
-        EMAIL_HOST_PASSWORD (get -local-conf "password")
-        EMAIL_USE_TLS True ;; XXX
-        DEFAULT_FROM_EMAIL (get -local-conf "mail-from")))
+  (setv -local-conf (json.load fh)
+        ADMINS (.items (get -local-conf "admins"))
+        -mail-conf (get -local-conf "mail")
+        EMAIL-HOST (get -mail-conf "host")
+        EMAIL-PORT (get -mail-conf "port")
+        EMAIL-HOST-USER (get -mail-conf "user")
+        EMAIL-HOST-PASSWORD (get -mail-conf "password")
+        EMAIL-USE-TLS True ;; XXX
+        DEFAULT-FROM-EMAIL (get -mail-conf "mail-from")
+        SERVER-EMAIL (get -mail-conf "mail-from")))

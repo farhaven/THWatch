@@ -1,6 +1,9 @@
 {
     "api_token": "YourPushoverApiKeyHere",
     "target_user": "YourPushoverUserKeyHere",
+    "admins": {
+        "Foo": "foo@example.com"
+    },
     "mail": {
         "host": "mx.example.com",
         "port": 587,

@@ -1,9 +1,10 @@
 (import [django.http [HttpResponse HttpResponseRedirect]]
+        [django.conf [settings]]
         [django.contrib.auth [logout]]
         [django.contrib.auth.views [LoginView PasswordChangeView PasswordResetView PasswordResetConfirmView]]
         [django.contrib.auth.mixins [LoginRequiredMixin]]
         [django.contrib.auth.models [User]]
-        [django.core.mail [send-mail]]
+        [django.core.mail [send-mail mail-admins]]
         [django.template.response [TemplateResponse]]
         [django.urls [reverse reverse-lazy]]
         [django.views.generic [TemplateView FormView View]])
@@ -29,7 +30,6 @@
     context)
 
   (defn post [self request]
-    (print request.POST)
     (setv context (self.get-context-data))
     (setv settings (try
                      (models.UserSettings.objects.get :owner request.user)
@@ -85,13 +85,10 @@
                                          (get form.cleaned-data 'password1)))
     (setv user.is-active False)
     (user.save)
-    (send-mail :subject "New THWatch user"
-               :message (.format "{name} ({email}) created a new account on THWatch."
-                                 :name (get form.cleaned-data 'name)
-                                 :email (get form.cleaned-data 'email))
-               :from-email "thwatch@unobtanium.de" ; XXX
-               :recipient-list ["gbe@unobtanium.de"] ; XXX
-               )
+    (mail-admins :subject "New THWatch user"
+                 :message (.format "{name} ({email}) created a new account on THWatch."
+                                   :name (get form.cleaned-data 'name)
+                                   :email (get form.cleaned-data 'email)))
     (TemplateResponse self.request self.template-success {"form" form})))
 
 
@@ -100,7 +97,7 @@
     (print "Sending test email to" request.user "now")
     (send-mail :subject "Test"
                :message "This is a test"
-               :from-email "thwatch@unobtanium.de" ; XXX
+               :from-email settings.DEFAULT-FROM-EMAIL
                :recipient-list [request.user.email])
     (HttpResponseRedirect (reverse-lazy "frontend.home"))))
 
