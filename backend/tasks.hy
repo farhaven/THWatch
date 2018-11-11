@@ -156,8 +156,7 @@
 
 (defclass PeriodicPoll [Task]
   [run-every 600 ; Poll every 10 minutes
-   ignore-result True
-   debug True]
+   ignore-result True]
 
   (defn --init-- [self]
     (.--init-- (super))
@@ -169,9 +168,7 @@
     (self.redis-conn.sadd "known-offers" #* (lfor x offers (x.stable-hash))))
 
   (defn is-offer-known? [self offer]
-    (if self.debug
-        False
-        (self.redis-conn.sismember "known-offers" (offer.stable-hash))))
+    (self.redis-conn.sismember "known-offers" (offer.stable-hash)))
 
   (defn run [self &rest args]
     (setv new-offers (thwbus.get-last-minute-offers))
