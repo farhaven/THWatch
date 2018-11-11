@@ -12,7 +12,6 @@
           name (cleaned-data.get 'name)
           passwd1 (cleaned-data.get 'password1)
           passwd2 (cleaned-data.get 'password2))
-    (print "Cleaned data: " cleaned-data)
     (unless (and (= passwd1 passwd2) (not (none? passwd1)) (!= (len passwd1) 0))
       (raise (forms.ValidationError "Passwords don't match!")))
     cleaned-data)
