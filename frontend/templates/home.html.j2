@@ -43,6 +43,17 @@
           {% endfor %}
         </table>
       {% else %}
+        <div class="dropdown">
+          <button class="btn btn-info dropdown-toggle" type="button" id="templateMenu"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Templates
+          </button>
+          <div class="dropdown-menu" aria-labelledby="templateMenu">
+            <button class="dropdown-item template-item" data-template="all" type="button">Alles</button>
+            <button class="dropdown-item template-item" data-template="spez" type="button">Spez.</button>
+            <button class="dropdown-item template-item" data-template="fu" type="button">Führung</button>
+          </div>
+        </div>
         <form method="POST">
           {{ csrf_input }}
           <input type="hidden" name="action" value="add-pattern"/>
@@ -62,4 +73,8 @@
       {% endif %}
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ static('frontend/js/patterns.js') }}"></script>
 {% endblock %}
