@@ -20,7 +20,9 @@
           self.meta meta
           self.begin (min dates)
           self.end (max dates)
-          self.reservation (.join "/" [basehost reservation])
+          self.reservation (if (reservation.startswith basehost)
+                               reservation
+                               (.join "/" [basehost reservation]))
           self.remaining-places remaining-places))
 
   (defn --str-- [self]
