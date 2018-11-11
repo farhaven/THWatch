@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-11-11 21:22+0100\n"
+"POT-Creation-Date: 2018-11-11 22:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,5 +36,60 @@ msgstr ""
 
 #: frontend/templates/home.html.j2:71
 msgid "Add Pattern"
+msgstr ""
+
+#: frontend/templates/home.html.j2:78
+msgid "Patterns"
+msgstr ""
+
+#: frontend/templates/home.html.j2:81
+msgid ""
+"Patterns are regular expressions that are matched against the title of a "
+"course offering."
+msgstr ""
+
+#: frontend/templates/home.html.j2:82
+msgid ""
+"If any pattern matches a new offering, you will be notified of its "
+"appearance through all of the alerting methods you have configured."
+msgstr ""
+
+#: frontend/templates/home.html.j2:83
+msgid "To get started, you can select one of the templates."
+msgstr ""
+
+#: frontend/templates/login.html.j2:11
+msgid "Please Log In"
+msgstr ""
+
+#: frontend/templates/login.html.j2:15
+msgid "Login failed!"
+msgstr ""
+
+#: frontend/templates/login.html.j2:22
+#, python-format
+msgid ""
+"If you lost your password, you can <a href=\"%(reset_url)s\">request a "
+"reset</a>."
+msgstr ""
+
+#: frontend/templates/login.html.j2:30
+msgid "User Name"
+msgstr ""
+
+#: frontend/templates/login.html.j2:34
+msgid "Password"
+msgstr ""
+
+#: frontend/templates/login.html.j2:37
+msgid "Log in"
+msgstr ""
+
+#: frontend/templates/login.html.j2:39
+msgid "I have lost my password"
+msgstr ""
+
+#: frontend/templates/login.html.j2:42
+msgid "I want to request an account"
 msgstr ""
 

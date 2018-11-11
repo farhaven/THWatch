@@ -8,17 +8,18 @@
 
 {% block content %}
   <div class="card mt-4">
-    <h5 class="card-header">Please Log In</h5>
+    <h5 class="card-header">{% trans %}Please Log In{% endtrans %}</h5>
     <div class="card-body">
       {% if form.errors %}
         <div class="alert alert-danger">
-          <h4 class="alert-heading">Login failed!</h4>
+          <h4 class="alert-heading">{% trans %}Login failed!{% endtrans %}</h4>
           {% for err in form.errors.__all__ %}
+            {# TODO: Translate form errors #}
             <p class="mb-0">{{ err }}</p>
           {% endfor %}
           <hr/>
           <span class="form-text text-muted">
-            If you lost your password, you can <a href="{{ url('password_reset') }}">request a reset</a>.
+            {% trans reset_url=url('password_reset') %}If you lost your password, you can <a href="%(reset_url)s">request a reset</a>.{% endtrans %}
           </span>
         </div>
       {% endif %}
@@ -26,16 +27,20 @@
         <form method="POST">
           {{ csrf_input }}
           <div class="form-group">
-            <label for="username">User Name</label>
+            <label for="username">{% trans %}User Name{% endtrans %}</label>
             <input class="form-control" type="text" id="username" name="username" autofocus/>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">{% trans %}Password{% endtrans %}</label>
             <input class="form-control" type="password" name="password"/>
           </div>
-          <button type="submit" class="btn btn-primary mr-auto">Log in</button>
-          <a href="{{ url('password_reset') }}" class="btn btn-warning float-right">I have lost my password</a>
-          <a href="{{ url('frontend.request-account')}} " class="btn btn-success float-right mr-2">I want to request an account</a>
+          <button type="submit" class="btn btn-primary mr-auto">{% trans %}Log in{% endtrans %}</button>
+          <a href="{{ url('password_reset') }}" class="btn btn-warning float-right">
+            {% trans %}I have lost my password{% endtrans %}
+          </a>
+          <a href="{{ url('frontend.request-account')}} " class="btn btn-success float-right mr-2">
+            {% trans %}I want to request an account{% endtrans %}
+          </a>
         </form>
       </div>
     </div>
