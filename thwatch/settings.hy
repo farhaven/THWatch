@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 (import os
         json)
 
+(import [django.utils.translation [ugettext-lazy :as -g]])
+
 ; Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 (setv BASE-DIR
       (os.path.dirname
@@ -44,14 +46,16 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
                   "django.middleware.csrf.CsrfViewMiddleware"
                   "django.contrib.auth.middleware.AuthenticationMiddleware"
                   "django.contrib.messages.middleware.MessageMiddleware"
-                  "django.middleware.clickjacking.XFrameOptionsMiddleware"])
+                  "django.middleware.clickjacking.XFrameOptionsMiddleware"
+                  "django.middleware.locale.LocaleMiddleware"])
 
 (setv ROOT_URLCONF "thwatch.urls")
 
 (setv TEMPLATES [{"BACKEND" "django.template.backends.jinja2.Jinja2"
                   "DIRS" ["frontend/templates"]
                   "APP_DIRS" True
-                  "OPTIONS" {"environment" "frontend.jinja2.environment"}}
+                  "OPTIONS" {"environment" "frontend.jinja2.environment"
+                             "context_processors" ["django.template.context_processors.i18n"]}}
                  {"BACKEND" "django.template.backends.django.DjangoTemplates"
                   "DIRS" []
                   "APP_DIRS" True
@@ -105,6 +109,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
       CELERY_TASK_SERIALIZER "json"
       CELERY_RESULT_SERIALIZER "json"
       CELERY_TIMEZONE "UTC")
+
+; Localization
+(setv LOCALE-PATHS [(os.path.join BASE-DIR 'locale)]
+      USE-I18N True
+      LANGUAGE-CODE 'en
+      LANGUAGES [(, 'en (-g 'English))
+                 (, 'de (-g 'Deutsch))])
 
 ; import local settings from conf.json
 (with [fh (open "conf.json" 'r)]

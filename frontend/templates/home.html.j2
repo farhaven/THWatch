@@ -26,7 +26,7 @@
     <div class="card-body">
       {% if active_page == "patterns" %}
         <table class="table">
-          <tr><th>Name</th><th>Pattern</th><th></th></tr>
+          <tr><th>{{ _('Pattern Name') }}</th><th>{{ _('Pattern') }}</th><th></th></tr>
           {% for p in patterns %}
             <tr>
               <td>{{ p.name }}</td>
@@ -46,7 +46,7 @@
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" id="templateMenu"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Templates
+                  {{ _('Templates') }}
           </button>
           <div class="dropdown-menu" aria-labelledby="templateMenu">
             <button class="dropdown-item template-item" data-template="all" type="button">Alles</button>
@@ -59,20 +59,31 @@
           <input type="hidden" name="action" value="add-pattern"/>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="pattern-name">Pattern Name</label>
+            <label class="col-sm-3 col-form-label" for="pattern-name">{{ _('Pattern Name') }}</label>
             <input class="col-sm-9 form-control" type="text" id="pattern-name" name="name" required/>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="pattern-pattern">Pattern</label>
+            <label class="col-sm-3 col-form-label" for="pattern-pattern">{{ _('Pattern') }}</label>
             <input class="col-sm-9 form-control" type="text" id="pattern-pattern" name="pattern" required/>
           </div>
 
-          <button type="submit" class="btn btn-success mt-1">Add Pattern</button>
+          <button type="submit" class="btn btn-success mt-1">{{ _('Add Pattern') }}</button>
         </form>
       {% endif %}
     </div>
   </div>
+  {% if active_page == "add-pattern" %}
+  <div class="card mt-1 text-white bg-info">
+    <h5 class="card-header">{{ _('Patterns') }}</h5>
+    <div class="card-body">
+      {# TODO: Provide link to doc for python regexes #}
+      <p>{% trans %}Patterns are regular expressions that are matched against the title of a course offering.{% endtrans %}</p>
+      <p>{% trans %}If any pattern matches a new offering, you will be notified of its appearance through all of the alerting methods you have configured.{% endtrans %}</p>
+      <p>{% trans %}To get started, you can select one of the templates.{% endtrans %}</p>
+    </div>
+  </div>
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}
